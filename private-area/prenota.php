@@ -13,8 +13,6 @@ if ($_SESSION['tipo_utente'] == 'admin') {
 require "../db.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    echo var_dump($_POST);
-
     $conn->begin_transaction();
 
     $query = "INSERT INTO prenotazioni (cliente, camera, dataarrivo, datapartenza) VALUES (?, ?, ?, ?)";
@@ -73,11 +71,11 @@ $camere = $res->fetch_all(MYSQLI_ASSOC);
         <label class="label">
             <span class="label-text">Data inizio</span>
         </label>
-        <input type="date" class="input input-bordered w-1/2 mb-4" name="dataarrivo">
+        <input type="date" required class="input input-bordered w-1/2 mb-4" name="dataarrivo">
         <label class="label">
             <span class="label-text">Data fine</span>
         </label>
-        <input type="date" class="input input-bordered w-1/2 mb-4" name="datapartenza">
+        <input type="date" required class="input input-bordered w-1/2 mb-4" name="datapartenza">
         
         <h1 class="p-5 text-xl mb-6 font-bold">Anagrafica</h1>
         <?php for ($i = 0; $i < $_GET['adulti']; $i++) : ?>
@@ -85,19 +83,19 @@ $camere = $res->fetch_all(MYSQLI_ASSOC);
             <label class="label">
                 <span class="label-text">Nome</span>
             </label>
-            <input type="text" class="input input-bordered w-1/2 mb-4" <?= $i === 0 ? 'disabled' : '' ?> placeholder="Nome" name="utenti[<?=$i?>][nome]" value="<?= $i === 0 ? $cliente['nome'] : '' ?>">
+            <input type="text" required class="input input-bordered w-1/2 mb-4" <?= $i === 0 ? 'disabled' : '' ?> placeholder="Nome" name="utenti[<?=$i?>][nome]" value="<?= $i === 0 ? $cliente['nome'] : '' ?>">
             <label class="label">
                 <span class="label-text">Cognome</span>
             </label>
-            <input type="text" class="input input-bordered w-1/2 mb-4" <?= $i === 0 ? 'disabled' : '' ?> placeholder="Cognome" name="utenti[<?=$i?>][cognome]" value="<?= $i === 0 ? $cliente['cognome'] : '' ?>">
+            <input type="text" required class="input input-bordered w-1/2 mb-4" <?= $i === 0 ? 'disabled' : '' ?> placeholder="Cognome" name="utenti[<?=$i?>][cognome]" value="<?= $i === 0 ? $cliente['cognome'] : '' ?>">
             <label class="label">
                 <span class="label-text">Indirizzo</span>
             </label>
-            <input type="text" class="input input-bordered w-1/2 mb-4" <?= $i === 0 ? 'disabled' : '' ?> placeholder="Indirizzo" name="utenti[<?=$i?>][indirizzo]" value="<?= $i === 0 ? $cliente['indirizzo'] : '' ?>">
+            <input type="text" required class="input input-bordered w-1/2 mb-4" <?= $i === 0 ? 'disabled' : '' ?> placeholder="Indirizzo" name="utenti[<?=$i?>][indirizzo]" value="<?= $i === 0 ? $cliente['indirizzo'] : '' ?>">
             <label class="label">
                 <span class="label-text">Telefono</span>
             </label>
-            <input type="text" class="input input-bordered w-1/2 mb-4" <?= $i === 0 ? 'disabled' : '' ?> placeholder="Telefono" name="utenti[<?=$i?>][telefono]" value="<?= $i === 0 ? $cliente['telefono'] : '' ?>">
+            <input type="text" required class="input input-bordered w-1/2 mb-4" <?= $i === 0 ? 'disabled' : '' ?> placeholder="Telefono" name="utenti[<?=$i?>][telefono]" value="<?= $i === 0 ? $cliente['telefono'] : '' ?>">
         <?php endfor; ?>
         <button class="btn btn-primary btn-lg  mb-6">Prenota</button>
     </form>
