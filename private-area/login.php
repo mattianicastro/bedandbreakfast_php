@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: login.php");
         exit();
     }
-    $query = "SELECT utenti.password, utenti.tipo_utente FROM utenti WHERE username = ?";
+    $query = "SELECT utenti.password, utenti.tipo_utente, utenti.id_cliente FROM utenti WHERE username = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("s", $_POST['username']);
     $stmt->execute();

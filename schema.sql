@@ -1,7 +1,7 @@
 -- Consegna
 
-CREATE TABLE clienti (
-    codice VARCHAR(6),
+CREATE TABLE IF NOT EXISTS clienti (
+    codice INTEGER AUTO_INCREMENT,
     cognome VARCHAR(20) NOT NULL,
     nome VARCHAR(20) NOT NULL,
     indirizzo VARCHAR(60),
@@ -10,41 +10,41 @@ CREATE TABLE clienti (
     PRIMARY KEY (codice)
 );
 
-CREATE TABLE camere(
+CREATE TABLE IF NOT EXISTS camere(
     numero INTEGER,
     descrizione VARCHAR(100),
     posti INTEGER NOT NULL,
     PRIMARY KEY(numero)
 );
 
-CREATE TABLE prenotazioni(
-    id INTEGER,
-    cliente VARCHAR(6),
+CREATE TABLE IF NOT EXISTS prenotazioni(
+    id INTEGER AUTO_INCREMENT,
+    cliente INTEGER,
     camera INTEGER,
     dataArrivo DATE,
     dataPartenza DATE,
     disdetta BIT DEFAULT 0,
     PRIMARY KEY(id),
-    FOREIGN KEY(cliente) REFERENCES clienti(codice),
-    FOREIGN KEY(camera) REFERENCES camere(numero)
+    FOREIGN KEY(cliente) REFERENCES clienti(codice) ON DELETE CASCADE,
+    FOREIGN KEY(camera) REFERENCES camere(numero) ON DELETE CASCADE
 );
 
-CREATE TABLE soggiorni(
+CREATE TABLE IF NOT EXISTS soggiorni(
     prenotazione INTEGER,
-    cliente VARCHAR(6),
+    cliente INTEGER,
     documento VARCHAR(60),
     PRIMARY KEY(prenotazione, cliente),
-    FOREIGN KEY(cliente) REFERENCES clienti(codice),
-    FOREIGN KEY(prenotazione) REFERENCES prenotazioni(id)
-)
+    FOREIGN KEY(cliente) REFERENCES clienti(codice) ON DELETE CASCADE,
+    FOREIGN KEY(prenotazione) REFERENCES prenotazioni(id) ON DELETE CASCADE
+);
 
----
+-- -
 
-CREATE TABLE utenti(
+CREATE TABLE IF NOT EXISTS utenti(
     username VARCHAR(20),
     password VARCHAR(60),
     tipo_utente ENUM('admin', 'user'),
-    id_cliente VARCHAR(6),
-    FOREIGN KEY(id_cliente) REFERENCES clienti(codice),
-    PRIMARY KEY(username)
+    id_cliente INTEGER,
+    FOREIGN KEY(id_cliente) REFERENCES clienti(codice) ON DELETE CASCADE, 
+    PRIMARY KEY(username) 
 );
