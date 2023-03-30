@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $conn->prepare($query);
     $user_type = "user";
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    $username = $_POST['nome'].".".$_POST['cognome'].rand(0,10);
+    $username = strtolower($_POST['nome'].".".$_POST['cognome'].rand(0,999));
     $stmt->bind_param("sssi", $username, $password , $user_type, $user_id);
     $stmt->execute();
     $conn->commit();
