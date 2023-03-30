@@ -30,7 +30,7 @@ $prenotazioni = $result->fetch_all(MYSQLI_ASSOC);
 <body>
     <?php require("../components/navbar.php") ?>
     <h1 class="p-5 text-3xl mb-6 font-bold text-center ">Le tue prenotazioni</h1>
-    <div class="flex flex-row justify-center items-center gap-x-5">
+    <div class="flex flex-row justify-center items-center gap-x-5 flex-wrap">
         <?php if ($result->num_rows === 0) : ?>
             <div class="hero min-h-screen bg-base-200">
                 <div class="hero-content text-center">
@@ -38,7 +38,7 @@ $prenotazioni = $result->fetch_all(MYSQLI_ASSOC);
                         <h1 class="text-5xl font-bold">Benvenuto <?= $cliente['nome'] ?></h1>
                         <p class="py-6">Non hai effettuato nessuna prenotazione. Inserisci il numero di adulti per prenotare una camera </p>
                         <input type="number" name="adulti" class="input input-sm"  value="1" placeholder="Adulti">
-                        <button type="submit" class="btn background-primary">Prenota ora</button>
+                        <button class="btn">Prenota ora</button>
                     </form>
                 </div>
             </div>
@@ -54,7 +54,7 @@ $prenotazioni = $result->fetch_all(MYSQLI_ASSOC);
                 </div>
             <?php foreach ($prenotazioni as $prenotazione) : ?>
                 <div class="card w-96 bg-base-100 shadow-xl">
-                    <figure><img src="../assets/interior-bedroom.jpg" alt="bedroom" /></figure>
+                    <figure><img src="../assets/<?= $prenotazione["foto"] ?? 'No_image_preview.png' ?>" alt="bedroom" /></figure>
                     <div class="card-body">
                         <h2 class="card-title"><?= $prenotazione['descrizione'] ?></h2>
                         <p>Camera numero <?= $prenotazione['camera'] ?></p>
@@ -63,7 +63,7 @@ $prenotazioni = $result->fetch_all(MYSQLI_ASSOC);
                         <p>Data di partenza <?= $prenotazione['dataPartenza'] ?></p>
                         <form class="card-actions justify-end" method="post" action="elimina.php">
                             <input type="hidden" name="id" value="<?= $prenotazione['id'] ?>">
-                            <input class="btn bg-warning" value="Annulla" ></input>
+                            <button class="btn bg-warning">Annulla</button>
                         </form>
                     </div>
                 </div>

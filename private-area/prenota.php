@@ -97,7 +97,6 @@ $camere = $res->fetch_all(MYSQLI_ASSOC);
 
         <div class="form-control w-full max-w-xs">
             <select required name="camera" class="select select-bordered">
-                <option disabled selected>Camera...</option>
                 <?php foreach ($camere as $camera) : 
                 $posti_insufficienti = $_GET["adulti"]>$camera["posti"] ? 'disabled' : ''
                 ?>

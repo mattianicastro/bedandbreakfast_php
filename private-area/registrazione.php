@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label class="label">
                 <span class="label-text">Password</span>
             </label>
-            <input type="password" required class="input input-bordered w-1/2 mb-4"placeholder="Telefono" name="password">
+            <input type="password" required class="input input-bordered w-1/2 mb-4"placeholder="Password" name="password">
         <button class="btn btn-primary btn-lg  mb-6">Registrati</button>
     </form>
 </body>
