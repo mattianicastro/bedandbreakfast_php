@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php require("../components/head.html");
-session_start();
+<?php require("../components/head.php");
 if (!isset($_SESSION['tipo_utente'])) {
     header("Location: login.php");
     exit();
@@ -13,7 +12,7 @@ if ($_SESSION['tipo_utente'] == 'user') {
 ?>
 
 <body>
-    <?php require("../components/navbar.html") ?>
+    <?php require("../components/navbar.php") ?>
     <h1 class="p-5 text-3xl mb-6 font-bold text-center ">Benvenuto <?= $_SESSION['username'] ?></h1>
     <div class="flex flex-col justify-center items-center">
         <h1 class="p-5 text-xl mb-6 font-bold">Gestione B&B</h1>

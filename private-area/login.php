@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php require("../components/head.html");
+<?php require("../components/head.php");
 require "../db.php";
-session_start();
 // check if the user is already logged in
 if (isset($_SESSION['tipo_utente'])) {
     if ($_SESSION['tipo_utente'] == 'admin') {
@@ -50,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 <body>
-    <?php require("../components/navbar.html") ?>
+    <?php require("../components/navbar.php") ?>
     <div class="flex h-screen w-screen bg-primary justify-center items-center">
     <form class="card shadow-2xl bg-base-100" method="POST">
       <div class="card-body">

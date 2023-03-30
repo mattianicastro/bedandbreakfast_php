@@ -19,5 +19,12 @@
     </div>  
     <div class="navbar-end gap-x-2">
         <a class="btn btn-ghost" href="/private-area/login.php">Area riservata</a>
+        <?php
+          if(isset($_SESSION['username'])):
+        ?>
+        <a class="btn btn-ghost" href="/private-area/logout.php">Logout</a>
+        <?php
+          endif;
+        ?>
     </div>
   </div>

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php require("../components/head.html");
-session_start();
+<?php require("../components/head.php");
 if (!isset($_SESSION['tipo_utente'])) {
     header("Location: login.php");
     exit();
@@ -29,7 +28,7 @@ $prenotazioni = $result->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <body>
-    <?php require("../components/navbar.html") ?>
+    <?php require("../components/navbar.php") ?>
     <h1 class="p-5 text-3xl mb-6 font-bold text-center ">Le tue prenotazioni</h1>
     <div class="flex flex-row justify-center items-center gap-x-5">
         <?php if ($result->num_rows === 0) : ?>

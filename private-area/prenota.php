@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php require("../components/head.html");
-session_start();
+<?php require("../components/head.php");
 if (!isset($_SESSION['tipo_utente'])) {
     header("Location: login.php");
     exit();
@@ -14,6 +13,20 @@ require "../db.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $conn->begin_transaction();
+
+    $stmt = $conn->prepare("SELECT * FROM prenotazioni WHERE ? BETWEEN dataarrivo and datapartenza AND camera=?");
+    $stmt->bind_param("si",$_POST['dataarrivo'], $_POST['camera']);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    $occupato = $res ? true : false;
+
+    if($occupato){
+        echo "<script>alert('Camera occupata durante il periodo selezionato')
+        location.href = 'login.php'
+        </script> 
+        ";
+        exit();
+    }
 
     $query = "INSERT INTO prenotazioni (cliente, camera, dataarrivo, datapartenza) VALUES (?, ?, ?, ?)";
     $stmt = $conn->prepare($query);
@@ -49,7 +62,7 @@ $camere = $res->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <body>
-    <?php require("../components/navbar.html") ?>
+    <?php require("../components/navbar.php") ?>
     <h1 class="p-5 text-3xl mb-4 font-bold text-center ">Nuova prenotazione</h1>
     <form class="flex flex-col justify-center items-center" method="post">
         <h1 class="p-5 text-xl mb-6 font-bold">Scegli una camera</h1>
