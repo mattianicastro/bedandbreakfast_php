@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') :
                 <p>Inserisci una data per cercare la prenotazione desiderata</p>
                 <input type="date" class="form-control" name="data" id="data">
                 <div class="card-actions justify-end">
-                    <button type="submit" class="btn btn-primary">Cerca</button>
+                    <button class="btn">Cerca</button>
                 </div>
         </form>
     </div>

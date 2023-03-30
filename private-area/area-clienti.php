@@ -38,7 +38,7 @@ $prenotazioni = $result->fetch_all(MYSQLI_ASSOC);
                         <h1 class="text-5xl font-bold">Benvenuto <?= $cliente['nome'] ?></h1>
                         <p class="py-6">Non hai effettuato nessuna prenotazione. Inserisci il numero di adulti per prenotare una camera </p>
                         <input type="number" name="adulti" class="input input-sm"  value="1" placeholder="Adulti">
-                        <button type="submit" class="btn btn-primary">Prenota ora</button>
+                        <button type="submit" class="btn background-primary">Prenota ora</button>
                     </form>
                 </div>
             </div>
@@ -48,7 +48,7 @@ $prenotazioni = $result->fetch_all(MYSQLI_ASSOC);
                         <h2 class="card-title">Prenota la tua prossima visita, inserisci il numero di adulti per continuare</h2>
                         <form class="card-actions justify-end" action="prenota.php">
                         <input type="number" name="adulti" class="input input-sm"  value="1" placeholder="Adulti">
-                        <button type="submit" class="btn btn-primary">Prenota ora</button>
+                        <button class="btn">Prenota ora</button>
                         </form>
                     </div>
                 </div>
@@ -63,7 +63,7 @@ $prenotazioni = $result->fetch_all(MYSQLI_ASSOC);
                         <p>Data di partenza <?= $prenotazione['dataPartenza'] ?></p>
                         <form class="card-actions justify-end" method="post" action="elimina.php">
                             <input type="hidden" name="id" value="<?= $prenotazione['id'] ?>">
-                            <input class="btn btn-danger" type="submit" value="Annulla" ></input>
+                            <input class="btn bg-warning" value="Annulla" ></input>
                         </form>
                     </div>
                 </div>

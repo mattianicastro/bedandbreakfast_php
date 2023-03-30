@@ -9,7 +9,7 @@
           <div class="max-w-md">
             <h1 class="mb-5 text-5xl font-bold">La Nuova Vela</h1>
             <p class="mb-5">Prova ad uscirne vivo</p>
-            <a class="btn btn-primary" href="private-area/registrazione.php">Registrati</a>
+            <a class="btn background-primary" href="private-area/registrazione.php">Registrati</a>
           </div>
         </div>
       </div>    

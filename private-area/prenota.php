@@ -12,13 +12,28 @@ if ($_SESSION['tipo_utente'] == 'admin') {
 require "../db.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    if($_POST['dataarrivo']>$_POST['datapartenza']){
+        echo "<script>alert('Data invalida')
+        location.href = 'login.php'
+        </script> 
+        ";
+        exit();        
+    }
+
     $conn->begin_transaction();
 
-    $stmt = $conn->prepare("SELECT * FROM prenotazioni WHERE ? BETWEEN dataarrivo and datapartenza AND camera=?");
-    $stmt->bind_param("si",$_POST['dataarrivo'], $_POST['camera']);
+    $stmt = $conn->prepare("SELECT * FROM prenotazioni
+    WHERE (? BETWEEN dataarrivo and datapartenza
+    OR ? BETWEEN dataarrivo and datapartenza)
+    AND camera=?");
+    $stmt->bind_param("ssi",$_POST['dataarrivo'], $_POST['datapartenza'], $_POST['camera']);
     $stmt->execute();
     $res = $stmt->get_result();
-    $occupato = $res ? true : false;
+
+    echo var_dump($res);
+    $occupato = $res->num_rows===0 ? false : true;
+    echo $occupato;
 
     if($occupato){
         echo "<script>alert('Camera occupata durante il periodo selezionato')
@@ -33,11 +48,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bind_param("iiss", $_SESSION['id_cliente'], $_POST['camera'], $_POST['dataarrivo'], $_POST['datapartenza']);
     $stmt->execute();
     
+    $query = "SELECT id from prenotazioni WHERE cliente=? AND camera=? AND dataarrivo=? AND datapartenza=?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("iiss", $_SESSION['id_cliente'], $_POST['camera'], $_POST['dataarrivo'], $_POST['datapartenza']);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    $res2 = $res->fetch_assoc();
+    $codice_prenotazione = $res2["id"];
+
     if(isset($_POST['utenti'])){
         for($i = 1; $i < count($_POST['utenti']); $i++){
             $query = "INSERT INTO clienti (nome, cognome, indirizzo, telefono) VALUES (?, ?, ?, ?)";
             $stmt = $conn->prepare($query);
             $stmt->bind_param("ssss", $_POST['utenti'][$i]['nome'], $_POST['utenti'][$i]['cognome'], $_POST['utenti'][$i]['indirizzo'], $_POST['utenti'][$i]['telefono']);
+            $stmt->execute();
+
+            $query = "INSERT INTO soggiorni (Prenotazione, Cliente) VALUES (?, ?)";
+            $stmt = $conn->prepare($query);
+            $stmt->bind_param("ii",$codice_prenotazione, $_SESSION['id_cliente']);
             $stmt->execute();
         }
     }
@@ -110,7 +138,7 @@ $camere = $res->fetch_all(MYSQLI_ASSOC);
             </label>
             <input type="text" required class="input input-bordered w-1/2 mb-4" <?= $i === 0 ? 'disabled' : '' ?> placeholder="Telefono" name="utenti[<?=$i?>][telefono]" value="<?= $i === 0 ? $cliente['telefono'] : '' ?>">
         <?php endfor; ?>
-        <button class="btn btn-primary btn-lg  mb-6">Prenota</button>
+        <button class="btn background-primary btn-lg  mb-6">Prenota</button>
     </form>
 </body>
 
