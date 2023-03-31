@@ -31,9 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->execute();
     $res = $stmt->get_result();
 
-    echo var_dump($res);
     $occupato = $res->num_rows===0 ? false : true;
-    echo $occupato;
 
     if($occupato){
         echo "<script>alert('Camera occupata durante il periodo selezionato')
@@ -55,22 +53,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $res = $stmt->get_result();
     $res2 = $res->fetch_assoc();
     $codice_prenotazione = $res2["id"];
+ 
+    $query = "INSERT INTO soggiorni (Prenotazione, Cliente) VALUES (?, ?)";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("ii",$codice_prenotazione, $_SESSION['id_cliente']);
+    $stmt->execute();
+
 
     if(isset($_POST['utenti'])){
-        for($i = 1; $i < count($_POST['utenti']); $i++){
+        for($i = 1; $i <= count($_POST['utenti']); $i++){
             $query = "INSERT INTO clienti (nome, cognome, indirizzo, telefono) VALUES (?, ?, ?, ?)";
             $stmt = $conn->prepare($query);
             $stmt->bind_param("ssss", $_POST['utenti'][$i]['nome'], $_POST['utenti'][$i]['cognome'], $_POST['utenti'][$i]['indirizzo'], $_POST['utenti'][$i]['telefono']);
+            $stmt->execute();    
+
+            $query = "SELECT Codice from clienti WHERE nome=? AND cognome=? AND indirizzo=? AND telefono=?";
+            $stmt = $conn->prepare($query);
+            $stmt->bind_param("ssss", $_POST['utenti'][$i]['nome'], $_POST['utenti'][$i]['cognome'], $_POST['utenti'][$i]['indirizzo'], $_POST['utenti'][$i]['telefono']);
             $stmt->execute();
+            $res = $stmt->get_result();
+            $res2 = $res->fetch_assoc();
+            $codice_cliente = $res2["Codice"];
 
             $query = "INSERT INTO soggiorni (Prenotazione, Cliente) VALUES (?, ?)";
             $stmt = $conn->prepare($query);
-            $stmt->bind_param("ii",$codice_prenotazione, $_SESSION['id_cliente']);
+            $stmt->bind_param("ii",$codice_prenotazione, $codice_cliente);
             $stmt->execute();
         }
     }
 
     $conn->commit();
+
     header("Location: area-clienti.php");
     exit();
 

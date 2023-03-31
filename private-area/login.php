@@ -24,7 +24,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->execute();
     $result = $stmt->get_result();
     if ($result->num_rows === 0) {
-        header("Location: login.php?error=wrong-username");
+        echo "<script>alert('Username o password errati')
+        location.href = 'login.php'
+        </script> 
+        ";
         exit();
     }
     $row = $result->fetch_assoc();
@@ -40,8 +43,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         }
     } else {
-        header("Location: login.php?error=wrong-password");
-        exit();
+        echo "<script>alert('Username o password errati')
+        location.href = 'login.php'
+        </script> 
+        ";
+        exit();       
     }
 
 

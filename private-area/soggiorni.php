@@ -11,14 +11,14 @@ if ($_SESSION['tipo_utente'] == 'user') {
 }
 require "../db.php";
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST'){
-    $query = "INSERT INTO soggiorni VALUES (?,?,?)";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("iii", $_POST['prenotazione'], $_POST['cliente'], $_POST['documento']);
-    $stmt->execute();
-    header("Location: soggiorni.php");
-    exit();
-}
+// if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+//     $query = "INSERT INTO soggiorni VALUES (?,?,?)";
+//     $stmt = $conn->prepare($query);
+//     $stmt->bind_param("iii", $_POST['prenotazione'], $_POST['cliente'], $_POST['documento']);
+//     $stmt->execute();
+//     header("Location: soggiorni.php");
+//     exit();
+// }
 
 $query = "SELECT prenotazioni.id, prenotazioni.dataarrivo, prenotazioni.camera, clienti.nome, clienti.cognome from prenotazioni
 INNER JOIN clienti ON prenotazioni.cliente=clienti.codice

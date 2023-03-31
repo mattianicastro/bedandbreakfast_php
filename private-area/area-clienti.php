@@ -30,7 +30,6 @@ $prenotazioni = $result->fetch_all(MYSQLI_ASSOC);
 <body>
     <?php require("../components/navbar.php") ?>
     <h1 class="p-5 text-3xl mb-6 font-bold text-center ">Le tue prenotazioni</h1>
-    <div class="flex flex-row justify-center items-center gap-x-5 flex-wrap">
         <?php if ($result->num_rows === 0) : ?>
             <div class="hero min-h-screen bg-base-200">
                 <div class="hero-content text-center">
@@ -43,6 +42,7 @@ $prenotazioni = $result->fetch_all(MYSQLI_ASSOC);
                 </div>
             </div>
         <?php else : ?>
+            <div class="w-full flex flex-row justify-center mb-6">
             <div class="card w-96 bg-base-100 shadow-xl">
                     <div class="card-body">
                         <h2 class="card-title">Prenota la tua prossima visita, inserisci il numero di adulti per continuare</h2>
@@ -52,6 +52,8 @@ $prenotazioni = $result->fetch_all(MYSQLI_ASSOC);
                         </form>
                     </div>
                 </div>
+            </div>
+            <div class="flex flex-row justify-center items-center gap-x-5 flex-wrap">
             <?php foreach ($prenotazioni as $prenotazione) : ?>
                 <div class="card w-96 bg-base-100 shadow-xl">
                     <figure><img src="../assets/<?= $prenotazione["foto"] ?? 'No_image_preview.png' ?>" alt="bedroom" /></figure>

@@ -15,14 +15,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') :
     $query = "SELECT * FROM prenotazioni
     INNER JOIN camere ON prenotazioni.camera = camere.numero
     INNER JOIN clienti ON prenotazioni.cliente = clienti.codice
-    WHERE ? BETWEEN dataarrivo AND datapartenza
+    WHERE clienti.telefono=?
     ";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("s", $_POST['data']);
+    $stmt->bind_param("s", $_POST['telefono']);
     $stmt->execute();
     $result = $stmt->get_result();
     if ($result->num_rows === 0) {
-        header("Location: ricerca-prenotazioni.php?error=no-results");
+        echo "<script>alert('Nessuna prenotazione trovata')
+        location.href = 'ricerca-prenotazioni-data.php'
+        </script> 
+        ";
         exit();
     }else{
         $prenotazioni = $result->fetch_all(MYSQLI_ASSOC);
@@ -63,9 +66,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') :
     <div class="flex flex-row justify-center items-center gap-x-5">
         <form class="card w-96 bg-base-100 shadow-xl" method="post">
             <div class="card-body">
-                <h2 class="card-title">Ricerca per data</h2>
-                <p>Inserisci una data per cercare la prenotazione desiderata</p>
-                <input type="date" class="form-control" name="data" id="data">
+                <h2 class="card-title">Ricerca per cliente</h2>
+                <p>Inserisci il numero di telefono di un cliente per cercare le sue prenotazioni</p>
+                <input type="text" class="input input-bordered input-primary " name="telefono" id="telefono">
                 <div class="card-actions justify-end">
                     <button class="btn">Cerca</button>
                 </div>

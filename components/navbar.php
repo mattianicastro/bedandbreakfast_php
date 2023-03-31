@@ -6,8 +6,8 @@
         </label>
         <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
         <li><a href="/">Home</a></li>
-        <li><a>Le camere</a></li>
-        <li><a>Dove trovarci</a></li>
+        <li><a href="/#camere">Le camere</a></li>
+        <li><a href="/#dove-trovarci">Dove trovarci</a></li>
         </ul>
       </div>
       <a class="md:visible invisible btn btn-ghost normal-case text-xl" href="/index.php">La Nuova Vela</a>
@@ -15,8 +15,8 @@
     </div>
     <div class="navbar-center hidden lg:flex">
       <ul class="menu menu-horizontal px-1">
-        <li><a>Le camere</a></li>
-        <li><a>Dove trovarci</a></li>
+      <li><a href="/#camere">Le camere</a></li>
+        <li><a href="/#dove-trovarci">Dove trovarci</a></li>
       </ul>
     </div>  
     <div class="navbar-end gap-x-2">
